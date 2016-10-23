@@ -49,16 +49,16 @@ func (c *Email) Send() {
 	log.Print("message sent")
 }
 
-func (e *Email) to(to ...string) {
+func (e *Email) SetTo(to ...string) {
 	e.To = to
 }
 
 
-func (e *Email) subject(subject string) {
+func (e *Email) SetSubject(subject string) {
 	e.Subject = subject
 }
 
-func (e *Email) body(body string) {
+func (e *Email) SetBody(body string) {
 	e.Body = body
 }
 
