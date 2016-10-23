@@ -25,16 +25,21 @@ func New(config Config) *Email {
 		},
 	}
 }
-func (c *Email) Send() {
+
+func Header(e *Email) map[string]string {
 	header := make(map[string]string)
-	header["From"] = c.Config.From
-	header["To"] = strings.Join(c.To, ",")
-	header["subject"] = c.Subject
+	header["From"] = e.Config.From
+	header["To"] = strings.Join(e.To, ",")
+	header["subject"] = e.Subject
 	header["MIME-Version"] = "1.0"
 	header["Content-Type"] = "text/html; charset\"utf-8\""
 	header["Content-Transfer-Encoding"] = "base64"
+	return header
+}
+
+func (c *Email) Send() {
 	msg := ""
-	for key, val := range header {
+	for key, val := range Header(c) {
 		msg += fmt.Sprintf("%s: %s\r\n", key, val)
 	}
 	msg += "\r\n"
@@ -53,7 +58,6 @@ func (e *Email) SetTo(to ...string) {
 	e.To = to
 }
 
-
 func (e *Email) SetSubject(subject string) {
 	e.Subject = subject
 }
@@ -61,4 +65,3 @@ func (e *Email) SetSubject(subject string) {
 func (e *Email) SetBody(body string) {
 	e.Body = body
 }
-
